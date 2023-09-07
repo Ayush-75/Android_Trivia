@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.androidtrivia.databinding.FragmentGameBinding
 import kotlin.math.min
 
@@ -81,7 +83,6 @@ class GameFragment : Fragment() {
         // Set the onClickListener for the submitButton
         binding.submitButton.setOnClickListener {
 
-                view: View ->
 
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
 
@@ -107,10 +108,19 @@ class GameFragment : Fragment() {
                     } else {
 
                         // We've won!  Navigate to the gameWonFragment.
+                        it.findNavController().navigate(
+                            GameFragmentDirections.actionGameFragmentToGameWonFragment(
+                                numQuestion,
+                                questionIndex
+                            )
+                        )
                     }
                 } else {
 
                     // Game over! A wrong answer sends us to the gameOverFragment.
+                    it.findNavController()
+                        .navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment2())
+
                 }
             }
         }
